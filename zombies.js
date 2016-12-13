@@ -7,6 +7,11 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
+class Item {
+  constructor(name) {
+    this.name = name;
+  }
+}
 
 
 /**
@@ -24,7 +29,12 @@
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
-
+class Weapon extends Item {
+  constructor(name, damage) {
+    super(name);
+    this.damage = damage;
+  }
+}
 
 /**
  * Weapon Extends Item Class
@@ -48,7 +58,12 @@
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-
+class Food extends Item {
+  constructor(name, energy) {
+    super(name);
+    this.energy = energy;
+  }
+}
 
 /**
  * Food Extends Item Class
@@ -78,7 +93,32 @@
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+class Player {
+  constructor(name, health, strength, speed) {
+    this._pack = [];
+    this._maxHealth = health;
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+  }
 
+  getPack() {
+    return this._pack;
+  }
+
+  getMaxHealth() {
+    return this._maxHealth;
+  }
+
+  checkPack() {
+    // var pack = getPack();
+    // pack = pack.join(", ");
+    // console.log(pack);
+  }
+}
 
 /**
  * Player Class Method => checkPack()
