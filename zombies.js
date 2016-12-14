@@ -113,14 +113,7 @@ class Player {
     return this._maxHealth;
   }
 
-  checkPack() {
-    // var pack = getPack();
-    // pack = pack.join(", ");
-    // console.log(pack);
-  }
-}
-
-/**
+  /**
  * Player Class Method => checkPack()
  * -----------------------------
  * Player checks the contents of their pack.
@@ -133,26 +126,23 @@ class Player {
  */
 
 
-/**
- * Player Class Method => takeItem(item)
- * -----------------------------
- * Player takes an item from the world and places it into their pack.
- *
- * Player's pack can only hold a maximum of 3 items, so if they try to add more
- *   than that to the pack, return false.
- * Before returning true or false, print a message containing the player's
- *   name and item's name if successful.  Otherwise, print a message saying
- *   that the pack is full so the item could not be stored.
- * Note: The player is allowed to store similar items (items with the same name).
- * You should be able to invoke this function on a Player instance.
- *
- * @name takeItem
- * @param {Item/Weapon/Food} item   The item to take.
- * @return {boolean} true/false     Whether player was able to store item in pack.
- */
+  checkPack() {
+    var pack = this.getPack();
+    pack = pack.join(", ");
+    console.log(pack);
+  }
 
+  takeItem(item) {
+    if(this._pack.length >= 3) {
+      console.log("Pack is full, item could not be stored!")
+      return false;
+    } else {
+      this._pack.push(item);
+      console.log(this.name, this._pack.join(", "))
+    }
+  }
 
-/**
+  /**
  * Player Class Method => discardItem(item)
  * -----------------------------
  * Player discards an item from their pack.
@@ -177,6 +167,88 @@ class Player {
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
+
+
+  discardItem(item) {
+    var pack = this.getPack();
+    if(pack.indexOf(item) !== -1) {
+      var index = pack.indexOf(item);
+      pack.splice(index, 1);
+      console.log(this.name, pack.join(", "), item + " was discarded!");
+      return true;
+    } else {
+      console.log(item + " could not be found, so nothing was discarded");
+      return false;
+    }
+  }
+
+  equip(itemToEquip) {
+    var pack = this.getPack();
+    if(itemToEquip instanceof(Weapon) && pack.indexOf(itemToEquip) !== -1) {
+      if(this.equipped !== false) {
+        var toReplaceItem = pack.indexOf(itemToEquip);
+        pack.splice(toReplaceItem, 1, this.equipped);
+        this.equipped = itemToEquip;
+      } else {
+        this.equipped = itemToEquip;
+        var toRemove = pack.indexOf(itemToEquip);
+        pack.splice(toRemove, 1)
+      }
+    }
+  }
+
+  eat(itemToEat) {
+    var pack = this.getPack();
+    if(itemToEat instanceof(Food) && pack.indexOf(itemToEat) !== -1) {
+      var toBeRemoved = pack.indexOf(itemToEat);
+      pack.splice(toBeRemoved, 1);
+      if((this.health + itemToEat.energy) > this._maxHealth) {
+        this.health = this._maxHealth;
+      } else {
+        this.health = this.health + itemToEat.energy;
+      }
+    }
+  }
+
+  useItem(item) {
+    if(item instanceof(Weapon)) {
+      this.equip(item);
+    } else if(item instanceof (Food)) {
+      this.eat(item);
+    }
+  }
+
+  equippedWith() {
+    if(this.equipped !== false) {
+      console.log(this.name + this.equipped)
+      return this.equipped.name;
+    } else {
+      return false;
+    }
+  }
+
+}
+
+
+/**
+ * Player Class Method => takeItem(item)
+ * -----------------------------
+ * Player takes an item from the world and places it into their pack.
+ *
+ * Player's pack can only hold a maximum of 3 items, so if they try to add more
+ *   than that to the pack, return false.
+ * Before returning true or false, print a message containing the player's
+ *   name and item's name if successful.  Otherwise, print a message saying
+ *   that the pack is full so the item could not be stored.
+ * Note: The player is allowed to store similar items (items with the same name).
+ * You should be able to invoke this function on a Player instance.
+ *
+ * @name takeItem
+ * @param {Item/Weapon/Food} item   The item to take.
+ * @return {boolean} true/false     Whether player was able to store item in pack.
+ */
+
+
 
 
 /**
@@ -399,3 +471,4 @@ function runGame() {
   // console.log("After health: " + player.health);
   // player.checkPack();
 }
+
