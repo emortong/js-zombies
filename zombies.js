@@ -9,10 +9,16 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
-class Item {
-  constructor(name) {
-    this.name = name;
-  }
+
+
+// class Item {
+//   constructor(name) {
+//     this.name = name;
+//   }
+// }
+
+function Item(name) {
+  this.name = name;
 }
 
 
@@ -37,6 +43,8 @@ class Weapon extends Item {
     this.damage = damage;
   }
 }
+
+
 
 /**
  * Weapon Extends Item Class
